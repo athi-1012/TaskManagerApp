@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { API } from '../global';
 
 
 const TaskList = () => {
@@ -8,14 +9,15 @@ const TaskList = () => {
 
   useEffect(() => {
     const fetchTasks = async () => {
-      const result = await axios.get('http://localhost:5000/tasks');
+      const result = await axios.get(`${API}/tasks`);
+
       setTasks(result.data);
     };
     fetchTasks();
   }, []);
 
   const deleteTask = async (id) => {
-    await axios.delete(`http://localhost:5000/tasks/${id}`);
+    await axios.delete(`${API}/tasks/${id}`);
     setTasks(tasks.filter((task) => task._id !== id));
   };
 

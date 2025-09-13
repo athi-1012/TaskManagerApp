@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -12,10 +14,12 @@ app.use(cors());
 const PORT = process.env.PORT || 5000;
 
 // MongoDB connection
-mongoose.connect('mongodb+srv://athiraasok1012:mongodbpassword@athi.2hmmwvj.mongodb.net/?retryWrites=true&w=majority&appName=Athi', {
+mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
+
+
 
 const db = mongoose.connection;
 
@@ -24,7 +28,7 @@ db.once('open', () => {
   console.log('Connected to MongoDB');
 });
 
-// Define Task model
+
 const taskSchema = new mongoose.Schema({
   title: String,
   description: String,
@@ -34,7 +38,7 @@ const taskSchema = new mongoose.Schema({
 
 const Task = mongoose.model('Task', taskSchema);
 
-// Define Routes
+
 app.get('/tasks', async (req, res) => {
   const tasks = await Task.find();
   res.json(tasks);
@@ -64,3 +68,4 @@ app.delete('/tasks/:id', async (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+console.log("Connecting to MongoDB with URI:", process.env.MONGO_URI);

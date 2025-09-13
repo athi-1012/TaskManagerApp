@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { API } from '../global';
 
 const AddTask = () => {
   const [title, setTitle] = useState('');
@@ -11,7 +12,7 @@ const AddTask = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     const newTask = { title, description, dueDate };
-    await axios.post('http://localhost:5000/tasks', newTask);
+    await axios.post(`${API}/tasks`, newTask);
     navigate('/');
   };
 

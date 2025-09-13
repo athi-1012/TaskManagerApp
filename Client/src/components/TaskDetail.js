@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
+import { API } from '../global';
 
 const TaskDetail = () => {
   const { id } = useParams();
@@ -8,13 +9,14 @@ const TaskDetail = () => {
   const history = useNavigate();
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/tasks/${id}`)
+    axios.get(`${API}/tasks/${id}`)
+
       .then(res => setTask(res.data))
       .catch(err => console.error(err));
   }, [id]);
 
   const handleDelete = () => {
-    axios.delete(`http://localhost:5000/tasks/${id}`)
+    axios.delete(`${API}/tasks/${id}`)
       .then(() => history.push('/'))
       .catch(err => console.error(err));
   };

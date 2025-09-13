@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
+import { API } from '../global';
+
 
 const EditTask = () => {
   const { id } = useParams();
@@ -11,7 +13,8 @@ const EditTask = () => {
 
   useEffect(() => {
     const fetchTask = async () => {
-      const result = await axios.get(`http://localhost:5000/tasks/${id}`);
+      const result = await axios.get(`${API}/tasks/${id}`);
+      
       setTitle(result.data.title);
       setDescription(result.data.description);
       setDueDate(result.data.dueDate);
@@ -22,7 +25,7 @@ const EditTask = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     const updatedTask = { title, description, dueDate };
-    await axios.put(`http://localhost:5000/tasks/${id}`, updatedTask);
+    await axios.put(`${API}/tasks/${id}`, updatedTask);
     navigate('/');
   };
 
