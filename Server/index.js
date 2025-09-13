@@ -35,35 +35,32 @@ const taskSchema = new mongoose.Schema({
 const Task = mongoose.model('Task', taskSchema);
 
 // Routes
-app.get('/', (req, res) => {
-  res.send("🚀 Task Manager Backend is running");
-});
-
-app.get('/tasks', async (req, res) => {
+app.get('/api/tasks', async (req, res) => {
   const tasks = await Task.find();
   res.json(tasks);
 });
 
-app.post('/tasks', async (req, res) => {
+app.post('/api/tasks', async (req, res) => {
   const task = new Task(req.body);
   await task.save();
   res.json(task);
 });
 
-app.get('/tasks/:id', async (req, res) => {
+app.get('/api/tasks/:id', async (req, res) => {
   const task = await Task.findById(req.params.id);
   res.json(task);
 });
 
-app.put('/tasks/:id', async (req, res) => {
+app.put('/api/tasks/:id', async (req, res) => {
   const task = await Task.findByIdAndUpdate(req.params.id, req.body, { new: true });
   res.json(task);
 });
 
-app.delete('/tasks/:id', async (req, res) => {
+app.delete('/api/tasks/:id', async (req, res) => {
   await Task.findByIdAndDelete(req.params.id);
   res.json({ message: 'Task deleted' });
 });
+
 
 // Start server
 app.listen(PORT, () => {

@@ -1,1 +1,1 @@
-export const API = process.env.REACT_APP_API_URL || "http://localhost:5000";
+export const API = "https://task-manager-app-coral.vercel.app/api";
